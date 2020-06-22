@@ -1,0 +1,97 @@
+{
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": "^7.4",
+        "ext-ctype": "*",
+        "ext-iconv": "*",
+        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "symfony/console": "5.1.*",
+        "symfony/dotenv": "5.1.*",
+        "symfony/flex": "^1.3.1",
+        "symfony/framework-bundle": "5.1.*",
+        "symfony/orm-pack": "^1.0",
+        "symfony/yaml": "5.1.*"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^2.16",
+        "phpstan/phpstan": "^0.12.30",
+        "phpstan/phpstan-symfony": "^0.12.6",
+        "phpunit/phpunit": "^9.2",
+        "sensiolabs/security-checker": "^6.0",
+        "vimeo/psalm": "^3.11"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PHPMinds\\Unit\\": "tests/phpunit/"
+        }
+    },
+    "replace": {
+        "paragonie/random_compat": "2.*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php72": "*",
+        "symfony/polyfill-php71": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "security-checker security:check": "script"
+        },
+        "post-install-cmd": [
+            "@auto-scripts"
+        ],
+        "post-update-cmd": [
+            "@auto-scripts"
+        ],
+        "phpstan": [
+            "@run-static-analysis"
+        ],
+        "reset-db": [
+            "bin/console doctrine:database:drop --force",
+            "bin/console doctrine:database:create",
+            "bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration"
+        ],
+        "populate-db": [
+            "bin/console doctrine:fixtures:load --no-interaction"
+        ],
+        "prepare-dev": [
+            "@composer install",
+            "@reset-db",
+            "@populate-db"
+        ],
+        "pre-commit": [
+            "@phpcs",
+            "@phpstan"
+        ],
+        "run-static-analysis": "phpstan analyse src/ --level 7",
+        "test": "phpunit --colors=always",
+        "test-coverage-complete": "phpunit --colors=always --coverage-html=tests/coverage/ ",
+        "phpcs": "php-cs-fixer fix --dry-run src",
+        "fix-styles": "php-cs-fixer fix src"
+    },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "5.1.*"
+        }
+    }
+}
