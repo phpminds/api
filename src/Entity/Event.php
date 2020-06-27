@@ -71,21 +71,21 @@ class Event
     private ?int $supporterId;
 
     /**
-     * @var \DateTime
+     * @var \DateTimeImmutable
      *
-     * @ORM\Column(name="meetup_date", type="datetime", nullable=false)
+     * @ORM\Column(name="meetup_date", type="datetime_immutable", nullable=false)
      */
-    private \DateTime $meetupDate;
+    private \DateTimeImmutable $meetupDate;
 
     /**
-     * @param int       $meetupId
-     * @param int       $meetupVenueId
-     * @param string    $joindinEventName
-     * @param int       $joindinTalkId
-     * @param string    $joindinUrl
-     * @param \DateTime $meetupDate
-     * @param int|null  $speakerId
-     * @param int|null  $supporterId
+     * @param int                $meetupId
+     * @param int                $meetupVenueId
+     * @param string             $joindinEventName
+     * @param int                $joindinTalkId
+     * @param string             $joindinUrl
+     * @param \DateTimeImmutable $meetupDate
+     * @param int|null           $speakerId
+     * @param int|null           $supporterId
      */
     public function __construct(
         int $meetupId,
@@ -93,7 +93,7 @@ class Event
         string $joindinEventName,
         int $joindinTalkId,
         string $joindinUrl,
-        \DateTime $meetupDate,
+        \DateTimeImmutable $meetupDate,
         ?int $speakerId = null,
         ?int $supporterId = null
     ) {
@@ -172,9 +172,9 @@ class Event
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTimeImmutable
      */
-    public function getMeetupDate(): \DateTime
+    public function getMeetupDate(): \DateTimeImmutable
     {
         return $this->meetupDate;
     }
