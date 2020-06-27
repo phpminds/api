@@ -177,6 +177,9 @@
     "phpstan/phpstan": {
         "version": "0.12.30"
     },
+    "phpstan/phpstan-doctrine": {
+        "version": "0.12.17"
+    },
     "phpstan/phpstan-symfony": {
         "version": "0.12.6"
     },
