@@ -9,7 +9,7 @@ interface TransformerInterface
     /**
      * @param Event[]|null $events
      *
-     * @return array<array<string,string>>>
+     * @return array<int, array<string, string|null>>
      */
     public function transform(?array $events): array;
 }

@@ -20,18 +20,39 @@ class Event
     private ?int $id = null;
 
     /**
-     * @var int
+     * @var string|null
      *
-     * @ORM\Column(name="meetup_id", type="integer", nullable=false)
+     * @ORM\Column(name="title", type="string", length=100, nullable=true)
      */
-    private int $meetupId;
+    private ?string $title;
 
     /**
-     * @var int
+     * @var string|null
      *
-     * @ORM\Column(name="meetup_venue_id", type="integer", nullable=false)
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
-    private int $meetupVenueId;
+    private ?string $description;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="rsvp_url", type="text", nullable=true)
+     */
+    private ?string $rsvpUrl;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="meetup_id", type="integer", nullable=true)
+     */
+    private ?int $meetupId;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="meetup_venue_id", type="integer", nullable=true)
+     */
+    private ?int $meetupVenueId;
 
     /**
      * @var string
@@ -76,25 +97,34 @@ class Event
     private \DateTimeImmutable $meetupDate;
 
     /**
-     * @param int                $meetupId
-     * @param int                $meetupVenueId
      * @param string             $joindinEventName
      * @param int                $joindinTalkId
      * @param string             $joindinUrl
      * @param \DateTimeImmutable $meetupDate
+     * @param int|null           $meetupId
+     * @param int|null           $meetupVenueId
+     * @param string|null        $title
+     * @param string|null        $description
+     * @param string|null        $rsvpUrl
      * @param int|null           $speakerId
      * @param int|null           $supporterId
      */
     public function __construct(
-        int $meetupId,
-        int $meetupVenueId,
         string $joindinEventName,
         int $joindinTalkId,
         string $joindinUrl,
         \DateTimeImmutable $meetupDate,
+        ?int $meetupId = null,
+        ?int $meetupVenueId = null,
+        ?string $title = null,
+        ?string $description = null,
+        ?string $rsvpUrl = null,
         ?int $speakerId = null,
         ?int $supporterId = null
     ) {
+        $this->title = $title;
+        $this->description = $description;
+        $this->rsvpUrl = $rsvpUrl;
         $this->meetupId = $meetupId;
         $this->meetupVenueId = $meetupVenueId;
         $this->joindinEventName = $joindinEventName;
@@ -114,17 +144,41 @@ class Event
     }
 
     /**
-     * @return int
+     * @return string|null
      */
-    public function getMeetupId(): int
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getRsvpUrl(): ?string
+    {
+        return $this->rsvpUrl;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getMeetupId(): ?int
     {
         return $this->meetupId;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMeetupVenueId(): int
+    public function getMeetupVenueId(): ?int
     {
         return $this->meetupVenueId;
     }
