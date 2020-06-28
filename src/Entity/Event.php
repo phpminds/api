@@ -5,10 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Events.
- *
  * @ORM\Table(name="events", indexes={@ORM\Index(name="meetup_id", columns={"meetup_id", "speaker_id"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  */
 class Event
 {
