@@ -9,7 +9,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 
 class EventFixtures extends Fixture
 {
-    private const EVENTS = [
+    public const EVENTS = [
         [
             'title' => null,
             'description' => null,
@@ -39,17 +39,7 @@ class EventFixtures extends Fixture
         foreach (self::EVENTS as $event) {
             $meetupDate = $this->getMeetupDate($event['meetup_date']);
             $manager->persist(
-                new Event(
-                    \sprintf($event['joindin_event_name'], $meetupDate->format('F'), $meetupDate->format('Y')),
-                    $event['joindin_talk_id'],
-                    \sprintf($event['joindin_url'], $event['joindin_talk_id']),
-                    $meetupDate,
-                    $event['meetup_id'],
-                    $event['meetup_venue_id'],
-                    $event['title'],
-                    $event['description'],
-                    $event['rsvp_url']
-                )
+                Event::fromArray($event, $meetupDate)
             );
         }
         $manager->flush();

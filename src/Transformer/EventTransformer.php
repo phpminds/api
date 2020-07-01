@@ -22,12 +22,28 @@ final class EventTransformer implements TransformerInterface
             $data[] = [
                 'title' => $event->getTitle(),
                 'description' => $event->getDescription(),
-                'rsvp_url' => $event->getRsvpUrl(),
+                'rsvp_url' => $this->getRsvpUrl($event),
                 'joindin_url' => $event->getJoindinUrl(),
                 'date' => $event->getMeetupDate()->format('c'),
             ];
         }
 
         return $data;
+    }
+
+    /**
+     * Added for backwards-compatibility.
+     *
+     * @param Event $event
+     *
+     * @return string|null
+     */
+    private function getRsvpUrl(Event $event): ?string
+    {
+        if (null !== $event->getMeetupId() && null === $event->getRsvpUrl()) {
+            return \sprintf('https://www.meetup.com/PHPMiNDS-in-Nottingham/events/%s/', $event->getMeetupId());
+        }
+
+        return $event->getRsvpUrl();
     }
 }

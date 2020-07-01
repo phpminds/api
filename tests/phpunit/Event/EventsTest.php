@@ -6,13 +6,14 @@ use App\Entity\Event;
 use App\Event\Events;
 use PHPUnit\Framework\TestCase;
 use App\Repository\EventRepository;
+use PHPUnit\Framework\MockObject\MockObject;
 
 class EventsTest extends TestCase
 {
     /**
-     * @var EventRepository<Event>
+     * @var EventRepository<Event>|MockObject
      */
-    private EventRepository $eventRepository;
+    private $eventRepository;
 
     protected function setUp(): void
     {

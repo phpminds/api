@@ -230,4 +230,62 @@ class Event
     {
         return $this->meetupDate;
     }
+
+    /**
+     * @param array<string, string|int|null> $data
+     * @param \DateTimeImmutable             $meetupDate
+     *
+     * @return Event
+     */
+    public static function fromArray(array $data, \DateTimeImmutable $meetupDate): Event
+    {
+        self::verify($data);
+
+        return new self(
+            \sprintf((string) $data['joindin_event_name'], $meetupDate->format('F'), $meetupDate->format('Y')),
+            (int) $data['joindin_talk_id'],
+            \sprintf((string) $data['joindin_url'], (int) $data['joindin_talk_id']),
+            $meetupDate,
+            null === $data['meetup_id'] ? null : (int) $data['meetup_id'],
+            null === $data['meetup_venue_id'] ? null : (int) $data['meetup_venue_id'],
+            null === $data['title'] ? $data['title'] : (string) $data['title'],
+            null === $data['description'] ? null : (string) $data['description'],
+            null === $data['rsvp_url'] ? null : (string) $data['rsvp_url']
+        );
+    }
+
+    /**
+     * @param array<string, string|int|null> $data
+     *
+     * @throws \InvalidArgumentException
+     */
+    private static function verify(array $data): void
+    {
+        $params = [
+            'joindin_event_name',
+            'joindin_talk_id',
+            'joindin_url',
+            'joindin_talk_id',
+            'meetup_id',
+            'meetup_venue_id',
+            'title',
+            'description',
+            'rsvp_url',
+        ];
+
+        $matchedParams = array_diff_key($data, $params);
+
+        if (count($matchedParams) !== count($params)) {
+            foreach ($params as $param) {
+                if (!in_array($param, $matchedParams, true)) {
+                    throw new \InvalidArgumentException(
+                        \sprintf(
+                            'Missing required parameters %s',
+                            \print_r($matchedParams, true)
+                        )
+                    );
+                }
+            }
+        }
+    }
 }
