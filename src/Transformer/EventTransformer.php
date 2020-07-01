@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Transformer;
 
 use App\Entity\Event;
@@ -7,7 +9,7 @@ use App\Entity\Event;
 final class EventTransformer implements TransformerInterface
 {
     /**
-     * @param Event[]|null $events
+     * @param array<int, Event>|null $events
      *
      * @return array<int, array<string, string|null>>
      */
@@ -17,18 +19,15 @@ final class EventTransformer implements TransformerInterface
             return [];
         }
 
-        $data = [];
-        foreach ($events as $event) {
-            $data[] = [
+        return \array_map(function ($event) {
+            return [
                 'title' => $event->getTitle(),
                 'description' => $event->getDescription(),
                 'rsvp_url' => $this->getRsvpUrl($event),
                 'joindin_url' => $event->getJoindinUrl(),
-                'date' => $event->getMeetupDate()->format('c'),
+                'date' => (string) $event->getMeetupDate()->format('c'),
             ];
-        }
-
-        return $data;
+        }, $events);
     }
 
     /**
