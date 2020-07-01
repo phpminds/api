@@ -17,6 +17,7 @@
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpstan/phpstan": "^0.12.30",
         "phpstan/phpstan-doctrine": "^0.12.17",
+        "phpstan/phpstan-phpunit": "^0.12.11",
         "phpstan/phpstan-symfony": "^0.12.6",
         "phpunit/phpunit": "^9.2",
         "sensiolabs/security-checker": "^6.0",
@@ -80,11 +81,12 @@
             "@phpcs",
             "@phpstan"
         ],
-        "run-static-analysis": "phpstan analyse src/ --level 7",
+        "run-static-analysis": "phpstan analyse src tests/phpunit --level 7",
         "test": "phpunit --colors=always",
         "test-coverage-complete": "phpunit --colors=always --coverage-html=tests/coverage/ ",
         "phpcs": "php-cs-fixer fix --dry-run src",
-        "fix-styles": "php-cs-fixer fix src"
+        "fix-styles": "php-cs-fixer fix src",
+        "fix-test-styles": "php-cs-fixer fix tests"
     },
     "conflict": {
         "symfony/symfony": "*"
