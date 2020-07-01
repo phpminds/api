@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPMinds\Unit\Entity;
 
 use App\Entity\Event;

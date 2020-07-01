@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PHPMinds\Unit\Transformer;
 
 use App\Entity\Event;
