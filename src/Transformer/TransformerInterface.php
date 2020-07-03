@@ -9,7 +9,7 @@ use App\Entity\Event;
 interface TransformerInterface
 {
     /**
-     * @param Event[]|null $events
+     * @param array<int, Event>|null $events
      *
      * @return array<int, array<string, string|null>>
      */
