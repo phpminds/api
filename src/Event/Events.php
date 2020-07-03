@@ -27,6 +27,9 @@ final class Events implements EventsInterface
         return null;
     }
 
+    /**
+     * @return array<int, Event>
+     */
     public function getPastEvents(): array
     {
         return $this->eventRepository->fetchPastEvents();

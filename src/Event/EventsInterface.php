@@ -11,7 +11,7 @@ interface EventsInterface
     public function getLatestEvent(): ?Event;
 
     /**
-     * @return Event[]
+     * @return array<int, Event>
      */
     public function getPastEvents(): array;
 }

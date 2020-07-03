@@ -21,7 +21,7 @@ class EventRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Event[]
+     * @return array<int, Event>
      */
     public function fetchPastEvents(): array
     {

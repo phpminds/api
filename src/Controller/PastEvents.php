@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Event\EventsInterface;
 use App\Transformer\TransformerInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,6 +23,11 @@ final class PastEvents extends AbstractController
      */
     public function getPastEvents(EventsInterface $events, TransformerInterface $transformer): JsonResponse
     {
-        return new JsonResponse($transformer->transform($events->getPastEvents()));
+        $pastEvents = $events->getPastEvents();
+        if (0 === count($pastEvents)) {
+            return new JsonResponse(['error' => 'No past events exist.'], Response::HTTP_NOT_FOUND);
+        }
+
+        return new JsonResponse($transformer->transform($pastEvents));
     }
 }
