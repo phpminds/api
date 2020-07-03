@@ -1,0 +1,46 @@
+{
+	"info": {
+		"_postman_id": "285081ba-1736-4d7f-b734-06e1624bdc4e",
+		"name": "PHPMiNDS API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Past Events",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/events/past",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"past"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Latest Event",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/events/latest",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"events",
+						"latest"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
