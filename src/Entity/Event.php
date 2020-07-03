@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use App\Event\Client\EventPayload;
 
 /**
  * @ORM\Table(name="events", indexes={@ORM\Index(name="meetup_id", columns={"meetup_id", "speaker_id"})})
@@ -64,18 +65,18 @@ class Event
     private string $joindinEventName;
 
     /**
-     * @var int
+     * @var int|null
      *
-     * @ORM\Column(name="joindin_talk_id", type="integer", nullable=false)
+     * @ORM\Column(name="joindin_talk_id", type="integer", nullable=true)
      */
-    private int $joindinTalkId;
+    private ?int $joindinTalkId;
 
     /**
-     * @var string
+     * @var string|null
      *
-     * @ORM\Column(name="joindin_url", type="string", length=253, nullable=false)
+     * @ORM\Column(name="joindin_url", type="string", length=253, nullable=true)
      */
-    private string $joindinUrl;
+    private ?string $joindinUrl;
 
     /**
      * @var int|null
@@ -100,27 +101,27 @@ class Event
 
     /**
      * @param string             $joindinEventName
-     * @param int                $joindinTalkId
-     * @param string             $joindinUrl
      * @param \DateTimeImmutable $meetupDate
-     * @param int|null           $meetupId
-     * @param int|null           $meetupVenueId
      * @param string|null        $title
      * @param string|null        $description
      * @param string|null        $rsvpUrl
+     * @param int|null           $joindinTalkId
+     * @param string|null        $joindinUrl
+     * @param int|null           $meetupId
+     * @param int|null           $meetupVenueId
      * @param int|null           $speakerId
      * @param int|null           $supporterId
      */
     public function __construct(
         string $joindinEventName,
-        int $joindinTalkId,
-        string $joindinUrl,
         \DateTimeImmutable $meetupDate,
-        ?int $meetupId = null,
-        ?int $meetupVenueId = null,
         ?string $title = null,
         ?string $description = null,
         ?string $rsvpUrl = null,
+        ?int $joindinTalkId = null,
+        ?string $joindinUrl = null,
+        ?int $meetupId = null,
+        ?int $meetupVenueId = null,
         ?int $speakerId = null,
         ?int $supporterId = null
     ) {
@@ -194,33 +195,33 @@ class Event
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getJoindinTalkId(): int
+    public function getJoindinTalkId(): ?int
     {
         return $this->joindinTalkId;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getJoindinUrl(): string
+    public function getJoindinUrl(): ?string
     {
         return $this->joindinUrl;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getSpeakerId(): int
+    public function getSpeakerId(): ?int
     {
         return $this->speakerId;
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getSupporterId(): int
+    public function getSupporterId(): ?int
     {
         return $this->supporterId;
     }
@@ -245,14 +246,14 @@ class Event
 
         return new self(
             \sprintf((string) $data['joindin_event_name'], $meetupDate->format('F'), $meetupDate->format('Y')),
-            (int) $data['joindin_talk_id'],
-            \sprintf((string) $data['joindin_url'], (int) $data['joindin_talk_id']),
             $meetupDate,
-            null === $data['meetup_id'] ? null : (int) $data['meetup_id'],
-            null === $data['meetup_venue_id'] ? null : (int) $data['meetup_venue_id'],
             null === $data['title'] ? $data['title'] : (string) $data['title'],
             null === $data['description'] ? null : (string) $data['description'],
-            null === $data['rsvp_url'] ? null : (string) $data['rsvp_url']
+            null === $data['rsvp_url'] ? null : (string) $data['rsvp_url'],
+            (int) $data['joindin_talk_id'],
+            \sprintf((string) $data['joindin_url'], (int) $data['joindin_talk_id']),
+            null === $data['meetup_id'] ? null : (int) $data['meetup_id'],
+            null === $data['meetup_venue_id'] ? null : (int) $data['meetup_venue_id'],
         );
     }
 
@@ -289,5 +290,21 @@ class Event
                 }
             }
         }
+    }
+
+    public static function fromPayload(EventPayload $eventPayload): Event
+    {
+        return new self(
+            self::getEventName($eventPayload->getDate()),
+            $eventPayload->getDate(),
+            $eventPayload->getTitle(),
+            $eventPayload->getDescription(),
+            $eventPayload->getRsvpUrl()
+        );
+    }
+
+    private static function getEventName(\DateTimeImmutable $meetupDate): string
+    {
+        return \sprintf('PHPMiNDS %s %s', $meetupDate->format('F'), $meetupDate->format('Y'));
     }
 }

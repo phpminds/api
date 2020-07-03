@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Event;
 use App\Event\EventsInterface;
 use App\Transformer\TransformerInterface;
-use App\Event\Client\EventClientInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,7 +25,7 @@ final class LatestEvent extends AbstractController
     public function getLatestEvent(EventsInterface $events, TransformerInterface $transformer): JsonResponse
     {
         $latestEvent = $events->getLatestEvent();
-        if (!$latestEvent instanceof EventClientInterface) {
+        if (!$latestEvent instanceof Event) {
             return new JsonResponse(['error' => 'No latest event found.'], Response::HTTP_NOT_FOUND);
         }
 

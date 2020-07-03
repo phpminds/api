@@ -33,4 +33,34 @@ class EventRepository extends ServiceEntityRepository
 
         return $qb->execute();
     }
+
+    public function fetchLatestEvent(): ?Event
+    {
+        $qb = $this->createQueryBuilder('e');
+        $qb = $qb
+            ->where('e.meetupDate >= :meetup_date')
+            ->setParameter('meetup_date', DateUtc::now())
+            ->setMaxResults(1)
+            ->getQuery();
+
+        $result = $qb->execute();
+
+        if (0 === count($result)) {
+            return null;
+        }
+
+        return $result[0];
+    }
+
+    /**
+     * @param Event $latestEvent
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Event $latestEvent): void
+    {
+        $this->_em->persist($latestEvent);
+        $this->_em->flush();
+    }
 }

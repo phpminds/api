@@ -23,5 +23,8 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    GuzzleHttp\Client:
+        # the first argument is the class and the second argument is the static method
+        factory: ['App\Event\Client\HttpClientFactory', 'create']
+        arguments:
+            $baseUrl: '%env(BASE_URL)%'
