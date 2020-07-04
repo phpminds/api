@@ -6,6 +6,7 @@ namespace PHPMinds\Unit\Event;
 
 use App\Entity\Event;
 use App\Event\Events;
+use App\Event\Refresh;
 use PHPUnit\Framework\TestCase;
 use App\Event\Client\EventPayload;
 use App\Repository\EventRepository;
@@ -26,10 +27,13 @@ class EventsTest extends TestCase
      */
     private $eventRepository;
 
+    private Refresh $refresh;
+
     protected function setUp(): void
     {
         $this->eventClient = $this->createMock(EventClientInterface::class);
         $this->eventRepository = $this->createMock(EventRepository::class);
+        $this->refresh = new Refresh(0);
     }
 
     /**
@@ -40,7 +44,7 @@ class EventsTest extends TestCase
      */
     public function get_latest_event_returns_null(): void
     {
-        $events = new Events($this->eventClient, $this->eventRepository);
+        $events = new Events($this->eventClient, $this->eventRepository, $this->refresh);
 
         $eventPayload = $this->createMock(EventPayload::class);
         $eventPayload->method('isEmpty')->willReturn(true);
@@ -60,7 +64,7 @@ class EventsTest extends TestCase
      */
     public function can_fetch_latest_event_from_event_client(): void
     {
-        $events = new Events($this->eventClient, $this->eventRepository);
+        $events = new Events($this->eventClient, $this->eventRepository, $this->refresh);
 
         $responseBody = $this->createMock(StreamInterface::class);
         $responseBody->method('getContents')->willReturn(\json_encode($this->getHttpResponseAsArray()));
@@ -83,7 +87,7 @@ class EventsTest extends TestCase
     {
         $this->eventRepository->method('fetchPastEvents')->willReturn([]);
 
-        $events = new Events($this->eventClient, $this->eventRepository);
+        $events = new Events($this->eventClient, $this->eventRepository, $this->refresh);
 
         $this->assertEquals([], $events->getPastEvents());
     }

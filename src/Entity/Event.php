@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Util\DateUtc;
 use Doctrine\ORM\Mapping as ORM;
 use App\Event\Client\EventPayload;
 
@@ -100,8 +101,16 @@ class Event
     private \DateTimeImmutable $meetupDate;
 
     /**
+     * @var \DateTimeImmutable
+     *
+     * @ORM\Column(name="updated", type="datetime_immutable", nullable=false)
+     */
+    private \DateTimeImmutable $updated;
+
+    /**
      * @param string             $joindinEventName
      * @param \DateTimeImmutable $meetupDate
+     * @param \DateTimeImmutable $updated
      * @param string|null        $title
      * @param string|null        $description
      * @param string|null        $rsvpUrl
@@ -115,6 +124,7 @@ class Event
     public function __construct(
         string $joindinEventName,
         \DateTimeImmutable $meetupDate,
+        \DateTimeImmutable $updated,
         ?string $title = null,
         ?string $description = null,
         ?string $rsvpUrl = null,
@@ -136,6 +146,7 @@ class Event
         $this->speakerId = $speakerId;
         $this->supporterId = $supporterId;
         $this->meetupDate = $meetupDate;
+        $this->updated = $updated;
     }
 
     /**
@@ -235,6 +246,23 @@ class Event
     }
 
     /**
+     * @return \DateTimeImmutable
+     */
+    public function getUpdated(): \DateTimeImmutable
+    {
+        return $this->updated;
+    }
+
+    public function mutate(Event $updatedEvent): void
+    {
+        $this->title = $updatedEvent->getTitle();
+        $this->description = $updatedEvent->getDescription();
+        $this->meetupDate = $updatedEvent->getMeetupDate();
+        $this->rsvpUrl = $updatedEvent->getRsvpUrl();
+        $this->updated = DateUtc::now();
+    }
+
+    /**
      * @param array<string, string|int|null> $data
      * @param \DateTimeImmutable             $meetupDate
      *
@@ -247,6 +275,7 @@ class Event
         return new self(
             \sprintf((string) $data['joindin_event_name'], $meetupDate->format('F'), $meetupDate->format('Y')),
             $meetupDate,
+            DateUtc::now(),
             null === $data['title'] ? $data['title'] : (string) $data['title'],
             null === $data['description'] ? null : (string) $data['description'],
             null === $data['rsvp_url'] ? null : (string) $data['rsvp_url'],
@@ -297,6 +326,7 @@ class Event
         return new self(
             self::getEventName($eventPayload->getDate()),
             $eventPayload->getDate(),
+            DateUtc::now(),
             $eventPayload->getTitle(),
             $eventPayload->getDescription(),
             $eventPayload->getRsvpUrl()

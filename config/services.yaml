@@ -28,3 +28,7 @@ services:
         factory: ['App\Event\Client\HttpClientFactory', 'create']
         arguments:
             $baseUrl: '%env(BASE_URL)%'
+
+    App\Event\Refresh:
+        arguments:
+            $refreshSeconds: '%env(REFRESH_TIME)%'
