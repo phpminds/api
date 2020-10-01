@@ -32,7 +32,7 @@ class EventFixtures extends Fixture
             'joindin_event_name' => 'PHPMiNDS %s %s',
             'joindin_talk_id' => 6128,
             'joindin_url' => 'https://m.joind.in/talk/view/%s',
-            'meetup_date' => null,
+            'meetup_date' => '2020-08-13 19:00:00',
         ],
     ];
 
