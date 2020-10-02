@@ -1,4 +1,4 @@
-FROM pavlakis/xdebug:2.9.0 AS xdebug
+FROM pavlakis/xdebug:2.9.8 AS xdebug
 FROM pavlakis/php-apache-common:7.4.10
 
 COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
