@@ -40,8 +40,8 @@ class EventTransformerTest extends TestCase
      * @test
      * @dataProvider rsvpUrlDataProvider
      *
-     * @param mixed       $rsvpUrl
-     * @param int|null    $meetupId
+     * @param mixed $rsvpUrl
+     * @param int|null $meetupId
      * @param string|null $expected
      */
     public function get_rsvp_url_or_null($rsvpUrl, ?int $meetupId, ?string $expected): void
@@ -64,5 +64,13 @@ class EventTransformerTest extends TestCase
         return [
             [null, null, null],
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function githubAction(): void
+    {
+        $this->assertTrue(false);
     }
 }
