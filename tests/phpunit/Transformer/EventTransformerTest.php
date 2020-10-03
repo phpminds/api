@@ -65,12 +65,4 @@ class EventTransformerTest extends TestCase
             [null, null, null],
         ];
     }
-
-    /**
-     * @test
-     */
-    public function githubAction(): void
-    {
-        $this->assertTrue(false);
-    }
 }
