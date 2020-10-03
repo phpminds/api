@@ -11,6 +11,9 @@
     "composer/xdebug-handler": {
         "version": "1.4.2"
     },
+    "dnoegel/php-xdg-base-dir": {
+        "version": "v0.1.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -228,9 +231,6 @@
     "phpunit/php-timer": {
         "version": "5.0.0"
     },
-    "phpunit/php-token-stream": {
-        "version": "4.0.2"
-    },
     "phpunit/phpunit": {
         "version": "4.7",
         "recipe": {
@@ -269,6 +269,9 @@
     "sanmai/pipeline": {
         "version": "v3.1.2"
     },
+    "sebastian/cli-parser": {
+        "version": "1.0.1"
+    },
     "sebastian/code-unit": {
         "version": "1.0.3"
     },
@@ -277,6 +280,9 @@
     },
     "sebastian/comparator": {
         "version": "4.0.2"
+    },
+    "sebastian/complexity": {
+        "version": "2.0.1"
     },
     "sebastian/diff": {
         "version": "4.0.1"
@@ -289,6 +295,9 @@
     },
     "sebastian/global-state": {
         "version": "4.0.0"
+    },
+    "sebastian/lines-of-code": {
+        "version": "1.0.1"
     },
     "sebastian/object-enumerator": {
         "version": "4.0.1"
