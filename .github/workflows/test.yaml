@@ -9,4 +9,4 @@ jobs:
       - name: Setup composer
       - run:  composer install --prefer-dist --no-progress --no-suggest
       - name: run phpunit
-        run:  composer test
+      - run:  composer test
