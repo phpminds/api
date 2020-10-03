@@ -19,3 +19,5 @@
 .phpunit.result.cache
 /tests/coverage/*
 ###< phpunit/phpunit ###
+.idea
+.idea/*
