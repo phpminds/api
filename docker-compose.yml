@@ -15,6 +15,7 @@ services:
         volumes:
             - ${WEB_APP_PATH}:/var/www/html:cached
 
+
     phpminds-api-db:
         image: mysql:5.7.22
         restart: always
@@ -24,3 +25,4 @@ services:
           - .env
         volumes:
             - ${WEB_APP_PATH}:/var/www/html:cached
+
