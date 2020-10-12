@@ -17,7 +17,3 @@ For an initial setup, update `.env` with the database credentials, and run:
 `composer build-dev`
 
 Use the Postman Collection in the `docs` folder.
-
-## TODO
-
-* Setup a Docker environment (can use the current setup for phpminds-website)

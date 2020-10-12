@@ -1,0 +1,26 @@
+version: '2'
+services:
+
+    phpminds-api-web:
+        build: docker/web
+        restart: always
+        links:
+            - phpminds-api-db:mysql
+        ports:
+            - 5180:80
+        env_file:
+            - .env
+        environment:
+            XDEBUG_CONFIG: "remote_host=${HOST_IP}"
+        volumes:
+            - ${WEB_APP_PATH}:/var/www/html:cached
+
+    phpminds-api-db:
+        image: mysql:5.7.22
+        restart: always
+        ports:
+            - 5106:3306
+        env_file:
+          - .env
+        volumes:
+            - ${WEB_APP_PATH}:/var/www/html:cached
