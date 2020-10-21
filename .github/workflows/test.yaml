@@ -10,3 +10,5 @@ jobs:
         run:  composer install --prefer-dist --no-progress --no-suggest
       - name: run phpunit
         run:  composer pp
+      - name: security checks
+        uses: symfonycorp/security-checker-action@v2
