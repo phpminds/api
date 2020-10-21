@@ -1,3 +1,5 @@
+[![Known Vulnerabilities](https://snyk.io/test/github/phpminds/api/badge.svg?targetFile=composer.lock)](https://snyk.io/test/github/phpminds/api?targetFile=composer.lock)
+
 # PHPMiNDS API
 
 An API to retrieve latest and past events.
