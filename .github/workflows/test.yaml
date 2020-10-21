@@ -11,4 +11,5 @@ jobs:
       - name: run phpunit
         run:  composer pp
       - name: security checks
+        run: composer require --dev roave/security-advisories:dev-latest
         uses: symfonycorp/security-checker-action@v2
