@@ -16,13 +16,14 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "infection/infection": "^0.16.4",
+        "friendsofphp/php-cs-fixer": "^3",
+        "infection/infection": "^0.23.0",
         "phpstan/phpstan": "^0.12.30",
         "phpstan/phpstan-doctrine": "^0.12.17",
         "phpstan/phpstan-phpunit": "^0.12.11",
         "phpstan/phpstan-symfony": "^0.12.6",
         "phpunit/phpunit": "^9.2",
-        "vimeo/psalm": "^3.11"
+        "vimeo/psalm": "^4.7"
     },
     "config": {
         "optimize-autoloader": true,
