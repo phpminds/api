@@ -2,7 +2,7 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.4",
+        "php": "^7.4 || ^8.0",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-fixtures-bundle": "^3.3",
@@ -16,15 +16,14 @@
         "ext-json": "*"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
-        "infection/infection": "^0.16.4",
+        "friendsofphp/php-cs-fixer": "^3",
+        "infection/infection": "^0.23.0",
         "phpstan/phpstan": "^0.12.30",
         "phpstan/phpstan-doctrine": "^0.12.17",
         "phpstan/phpstan-phpunit": "^0.12.11",
         "phpstan/phpstan-symfony": "^0.12.6",
         "phpunit/phpunit": "^9.2",
-        "sensiolabs/security-checker": "^6.0",
-        "vimeo/psalm": "^3.11"
+        "vimeo/psalm": "^4.7"
     },
     "config": {
         "optimize-autoloader": true,
@@ -55,14 +54,15 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "security-checker security:check": "script"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@security-check"
         ],
         "post-update-cmd": [
-            "@auto-scripts"
+            "@auto-scripts",
+            "@security-check"
         ],
         "phpstan": [
             "@run-static-analysis"
@@ -85,6 +85,7 @@
             "@phpcs",
             "@phpstan"
         ],
+        "security-check": "docker run --platform linux/x86_64 --rm -v $(pwd):$(pwd) -w $(pwd) symfonycorp/cli security:check",
         "run-static-analysis": "phpstan analyse src tests/phpunit --level 7",
         "test": "phpunit --colors=always",
         "test-coverage-complete": "phpunit --colors=always --coverage-html=tests/coverage/ ",
@@ -98,7 +99,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "5.1.*"
+            "require": "5.2.*"
         }
     }
 }
