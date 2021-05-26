@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace DoctrineMigrations;
 
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
+use Doctrine\Migrations\Exception\MigrationException;
 
 /**
  * This is an export of the original DB schema, and is used as the baseline schema for development.
@@ -114,5 +116,10 @@ CREATE TABLE `users` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;        
         ');
+    }
+
+    public function down(Schema $schema): void
+    {
+        // TODO: Implement down() method.
     }
 }
